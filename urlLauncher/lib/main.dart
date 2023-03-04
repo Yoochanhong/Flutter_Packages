@@ -27,11 +27,22 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            launchUrl(Uri.parse('https://youtube.com'));
-          },
-          child: Text('유튜브'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                launchUrl(Uri.parse('https://youtube.com'));
+              },
+              child: Text('유튜브'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                launchUrl(Uri.parse('tel: 010 6286 3930'));
+              },
+              child: Text('전화하기'),
+            )
+          ],
         ),
       ),
     );

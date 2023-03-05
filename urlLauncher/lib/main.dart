@@ -41,7 +41,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 launchUrl(Uri.parse('tel: 010 6286 3930'));
               },
               child: Text('전화하기'),
-            )
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  launchUrl(Uri.parse('sms: 010 6286 3930'));
+                },
+                child: Text('문자')),
           ],
         ),
       ),

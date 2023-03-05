@@ -43,10 +43,18 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('전화하기'),
             ),
             ElevatedButton(
-                onPressed: () {
-                  launchUrl(Uri.parse('sms: 010 6286 3930'));
-                },
-                child: Text('문자')),
+              onPressed: () {
+                launchUrl(Uri.parse('sms: 010 6286 3930'));
+              },
+              child: Text('문자'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                launchUrl(Uri.parse(
+                    'mailto: chanhongy6@naver.com?subject=Test&body=what'));
+              },
+              child: Text('메일 보내기'),
+            ),
           ],
         ),
       ),

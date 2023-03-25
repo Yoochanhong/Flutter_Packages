@@ -39,3 +39,9 @@ Future<File> getLocalFile() async {
   final path = await getLocalPath();
   return File('$path/temp.txt');
 }
+
+Future<File> writeString(String str) async {
+  final file = await getLocalFile();
+
+  return file.writeAsString(str);
+}

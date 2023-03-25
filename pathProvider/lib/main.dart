@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 void main() => runApp(const MyApp());
 
@@ -32,4 +33,9 @@ class _MyHomePageState extends State<MyHomePage> {
 Future<String> getLocalPath() async {
   final dir = await getApplicationDocumentsDirectory();
   return dir.path;
+}
+
+Future<File> getLocalFile() async {
+  final path = await getLocalPath();
+  return File('$path/temp.txt');
 }

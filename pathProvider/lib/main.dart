@@ -25,6 +25,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   TextEditingController controller = TextEditingController();
+  Future<String>? str;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,12 @@ class _MyHomePageState extends State<MyHomePage> {
         elevation: 0.0,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              writeString(controller.text);
+              setState(() {
+                str = readString();
+              });
+            },
             icon: const Icon(Icons.start),
             color: Colors.black,
           ),
@@ -61,6 +67,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
+          ),
+          FutureBuilder(
+            future: readString(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Text(snapshot.data.toString());
+              }
+              return Text(snapshot.error.toString());
+            },
           ),
         ],
       ),

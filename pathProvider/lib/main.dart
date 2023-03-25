@@ -45,3 +45,13 @@ Future<File> writeString(String str) async {
 
   return file.writeAsString(str);
 }
+
+Future<String> readString() async {
+  try {
+    final file = await getLocalFile();
+    String contents = await file.readAsString();
+    return contents;
+  } catch (e) {
+    return "에러";
+  }
+}

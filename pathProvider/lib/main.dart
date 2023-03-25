@@ -29,12 +29,24 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.start),
+            color: Colors.black,
+          ),
+        ],
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.grey[100],
               borderRadius: const BorderRadius.all(Radius.circular(8)),
               border: Border.all(width: 1, color: Colors.black12),
             ),

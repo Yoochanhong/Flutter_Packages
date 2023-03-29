@@ -1,3 +1,5 @@
+import 'package:dio1/model/coordinates.dart';
+
 class Address {
   String? city;
   String? streetName;
@@ -9,12 +11,12 @@ class Address {
 
   Address(
       {this.city,
-        this.streetName,
-        this.streetAddress,
-        this.zipCode,
-        this.state,
-        this.country,
-        this.coordinates});
+      this.streetName,
+      this.streetAddress,
+      this.zipCode,
+      this.state,
+      this.country,
+      this.coordinates});
 
   Address.fromJson(Map<String, dynamic> json) {
     city = json['city'];
@@ -24,20 +26,20 @@ class Address {
     state = json['state'];
     country = json['country'];
     coordinates = json['coordinates'] != null
-        ? new Coordinates.fromJson(json['coordinates'])
+        ? Coordinates.fromJson(json['coordinates'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['city'] = this.city;
-    data['street_name'] = this.streetName;
-    data['street_address'] = this.streetAddress;
-    data['zip_code'] = this.zipCode;
-    data['state'] = this.state;
-    data['country'] = this.country;
-    if (this.coordinates != null) {
-      data['coordinates'] = this.coordinates!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['city'] = city;
+    data['street_name'] = streetName;
+    data['street_address'] = streetAddress;
+    data['zip_code'] = zipCode;
+    data['state'] = state;
+    data['country'] = country;
+    if (coordinates != null) {
+      data['coordinates'] = coordinates!.toJson();
     }
     return data;
   }

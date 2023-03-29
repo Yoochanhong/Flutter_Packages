@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:dio1/service/get_user.dart';
+import 'package:dio1/model/user.dart';
 
-void main()=> runApp(MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MyHomePage(),
     );
@@ -22,8 +24,28 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Future<User>? future;
+
+  @override
+  void initState() {
+    super.initState();
+    future = getUser();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Center(
+        child: FutureBuilder(
+          future: future,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Text(snapshot.data!.username.toString());
+            }
+            return Text("아직 안옴");
+          },
+        ),
+      ),
+    );
   }
 }

@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttersecurestorage/login_response.dart';
 import 'package:fluttersecurestorage/success_page.dart';
+import 'package:http/http.dart' as http;
 
 void main() => runApp(const MyApp());
 
@@ -33,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      userInfo = await storage.read(key: 'login');
+      userInfo = await storage.read(key: 'accessToken');
       if (userInfo != null) {
         Navigator.pushAndRemoveUntil(
             context,
@@ -139,10 +142,49 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text("로그인 버튼"),
-                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () async {
+                          LoginResponse loginResponse;
+                          final response = await http.post(Uri.parse(
+                              "http://localhost:8080/signin?id=${idController.text}&password=${passwordController.text}"));
+                          if (response.statusCode == 200) {
+                            loginResponse = LoginResponse.fromJson(
+                                jsonDecode(response.body));
+                            storage.write(
+                                key: 'accessToken',
+                                value: loginResponse.accessToken);
+                            storage.write(
+                                key: 'refreshToken',
+                                value: loginResponse.refreshToken);
+                            storage.write(key: 'login', value: "로그인 성공");
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SuccessPage()),
+                                (route) => false);
+                          } else {
+                            throw Exception("아이디나 비밀번호를 잘못 입력함");
+                          }
+                        },
+                        child: const Text("로그인 버튼"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          var response = await http.post(Uri.parse(
+                              "http://localhost:8080/signup?id=${idController.text}&password=${passwordController.text}"));
+                          if (response.statusCode == 202) {
+                            print("이미 있는 유저");
+                          } else {
+                            print("회원가입 완료");
+                          }
+                        },
+                        child: const Text("회원가입 버튼"),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttersecurestorage/success_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -24,6 +26,24 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController idController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  var storage = const FlutterSecureStorage();
+  dynamic userInfo = '';
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      userInfo = await storage.read(key: 'login');
+      if (userInfo != null) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const SuccessPage()),
+            (route) => false);
+      } else {
+        print("로그인이 필요함");
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
